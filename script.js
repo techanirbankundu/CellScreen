@@ -20,7 +20,6 @@ let animationFrameId;
 
 let currentShape = 'rectangle';
 let currentRadius = 16;
-
 // Camera overlay state for position and size
 let overlayState = {
   x: null, // top-left x (set after video loads)
