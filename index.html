@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CellScreen</title>
+  <link rel="icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CellScreen is a screen recorder that allows you to record your screen and camera with a custom border radius.">
+  <meta name="keywords" content="screen recorder, screen capture, screen capture with border radius, screen capture with custom border radius">
+  <meta name="author" content="Anirban Kundu">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="google" content="notranslate">
+  <meta name="theme-color" content="#232b3a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CellScreen">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CellScreen">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="app-logo">🦠</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn active" id="navHome" title="Home">
+          <svg class="sidebar-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9"/><path d="M9 21V9h6v12"/></svg>
+        </button>
+        <button class="sidebar-btn" id="navSettings" title="Settings">
+          <svg class="sidebar-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09A1.65 1.65 0 0 0 9 3.09V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09c.2.63.77 1.09 1.51 1.09H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div id="homePanel">
+        <div class="container">
+          <h2 class="section-title">Recorder</h2>
+          <div class="buttons">
+            <button id="startBtn">Start Recording</button>
+            <button id="stopBtn" disabled>Stop Recording</button>
+          </div>
+          <div class="videos">
+            <video id="screenPreview" autoplay muted></video>
+            <video id="cameraPreview" autoplay muted></video>
+            <canvas id="compositeCanvas" style="display:none;"></canvas>
+          </div>
+          <div class="output-preview-section">
+            <h2 class="section-title">Output Preview</h2>
+            <canvas id="outputPreview" width="640" height="360"></canvas>
+          </div>
+          <div class="camera-shape-controls">
+            <label>Camera Shape:</label>
+            <select id="camShape">
+              <option value="rectangle">Rectangle</option>
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+              <option value="custom">Custom Border Radius</option>
+            </select>
+            <input type="range" id="camRadius" min="0" max="50" value="16" style="display:none;">
+            <span id="camRadiusValue" style="display:none;">16</span>
+          </div>
+        </div>
+      </div>
+      <div id="settingsPanel" style="display:none;">
+        <div class="container">
+          <h2 class="section-title">Settings</h2>
+          <div class="settings-section">
+            <h3 class="settings-subtitle">Device Selection</h3>
+            <div class="device-selectors column">
+              <div class="selector">
+                <label for="micSelect">Microphone:</label>
+                <select id="micSelect"></select>
+              </div>
+              <div class="selector">
+                <label for="camSelect">Camera:</label>
+                <select id="camSelect"></select>
+              </div>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3 class="settings-subtitle">Recording Options</h3>
+            <div class="controls">
+              <label class="switch">
+                <input type="checkbox" id="micCheckbox">
+                <span class="slider"></span>
+              </label>
+              <span class="switch-label">Include Microphone</span>
+              <label class="switch">
+                <input type="checkbox" id="camCheckbox">
+                <span class="slider"></span>
+              </label>
+              <span class="switch-label">Include Camera</span>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section developer-details">
+          <h3 class="settings-subtitle">Developer</h3>
+          <div class="dev-info">
+            <div><strong>Name:</strong> Anirban Kundu, A full stack developer</div>
+            <div><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/anidevkundu/" target="_blank">@anidevkundu</a></div>
+            <div><strong>GitHub:</strong> <a href="https://github.com/techanirbankundu/" target="_blank">@techanirbankundu</a></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
